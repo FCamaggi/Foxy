@@ -24,13 +24,19 @@ Un juego de memoria y astucia donde los jugadores deben recordar cuántos animal
 
 ## 🚀 Inicio Rápido
 
-### Opción 1: Script Automático
+### 🎮 Usar en Producción (Ya Desplegado)
+
+Si el juego ya está desplegado, simplemente ve a la URL de producción y juega.
+
+### 💻 Desarrollo Local
+
+**Opción 1: Script Automático**
 
 ```bash
 ./start.sh
 ```
 
-### Opción 2: Manual
+**Opción 2: Manual**
 
 **Terminal 1 - Backend:**
 ```bash
@@ -49,13 +55,24 @@ npm run dev
 
 Abre http://localhost:3000 en tu navegador.
 
+### 🚀 Desplegar a Producción
+
+**Guía Rápida:**
+1. Lee [DEPLOY_NOW.md](./DEPLOY_NOW.md) - Resumen de 5 minutos
+2. Sigue [DEPLOY_GUIDE.md](./DEPLOY_GUIDE.md) - Guía paso a paso completa
+
+**Tiempo total:** ~30 minutos | **Costo:** $0/mes (tier gratuito)
+
 ---
 
 ## 📚 Documentación
 
-- **[MONGODB_SETUP.md](./MONGODB_SETUP.md)** - Guía completa para configurar MongoDB Atlas
-- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Guía de despliegue en Netlify + Render
-- **[docs/manual.md](./docs/manual.md)** - Manual del juego físico original
+- **[DEPLOY_NOW.md](./DEPLOY_NOW.md)** - 🚀 Resumen ejecutivo para deployment
+- **[DEPLOY_GUIDE.md](./DEPLOY_GUIDE.md)** - 📖 Guía completa paso a paso
+- **[MONGODB_SETUP.md](./MONGODB_SETUP.md)** - 🗄️ Configuración detallada de MongoDB Atlas
+- **[ARCHITECTURE.md](./ARCHITECTURE.md)** - 🏗️ Arquitectura del sistema
+- **[CHECKLIST.md](./CHECKLIST.md)** - ✅ Checklist de verificación
+- **[docs/manual.md](./docs/manual.md)** - 📘 Manual del juego físico original
 
 ---
 
@@ -137,8 +154,12 @@ foxy/
 │       ├── models/        # Modelos MongoDB
 │       ├── gameLogic.ts   # Generación de mazos
 │       └── types.ts       # Tipos TypeScript
-├── docs/                  # Documentación
-└── DEPLOYMENT.md          # Guía de despliegue
+├── docs/                  # Documentación del juego
+├── DEPLOY_GUIDE.md        # 📖 Guía completa de despliegue
+├── DEPLOY_NOW.md          # 🚀 Resumen rápido de deploy
+├── MONGODB_SETUP.md       # 🗄️ Configuración de MongoDB
+├── ARCHITECTURE.md        # 🏗️ Arquitectura del sistema
+└── CHECKLIST.md           # ✅ Checklist de verificación
 ```
 
 ### Scripts Disponibles
@@ -153,44 +174,79 @@ foxy/
 - `npm run build` - Compilar TypeScript
 - `npm start` - Iniciar servidor compilado
 
+**Utilidades:**
+- `./start.sh` - Iniciar frontend + backend automáticamente
+- `./check-deploy.sh` - Verificar configuración antes de desplegar
+- `./setup-deploy.sh` - Configurar Git para deployment
+
 ---
 
 ## 🌐 Despliegue
 
-Sigue la guía completa en [DEPLOYMENT.md](./DEPLOYMENT.md)
+### Guía Rápida
 
-**Resumen:**
-1. Crea cluster en MongoDB Atlas
-2. Despliega backend en Render
-3. Despliega frontend en Netlify
-4. Configura variables de entorno
+1. **Lee primero:** [DEPLOY_NOW.md](./DEPLOY_NOW.md) (5 minutos)
+2. **Sigue paso a paso:** [DEPLOY_GUIDE.md](./DEPLOY_GUIDE.md) (30 minutos)
+3. **Verifica antes:** `./check-deploy.sh`
 
-**Costos:** Gratis con limitaciones (tier gratuito de todos los servicios)
+### Orden de Deployment
+
+1. **MongoDB Atlas** - Crea cluster M0 (gratis)
+2. **Render** - Despliega backend con `server/` como Root Directory
+3. **Netlify** - Despliega frontend desde `main` branch
+4. **Actualiza CORS** - Añade URL de Netlify en Render
+
+**Costo total:** $0/mes (tier gratuito) 🎉
 
 ---
 
 ## 🔒 Variables de Entorno
 
-**Frontend (.env):**
+**Frontend (/.env):**
 ```env
 VITE_SERVER_URL=http://localhost:3001
+# Producción: https://tu-app-backend.onrender.com
 ```
 
 **Backend (server/.env):**
 ```env
 PORT=3001
-MONGODB_URI=mongodb+srv://...
+MONGODB_URI=mongodb+srv://<user>:<pass>@cluster0.xxxxx.mongodb.net/foxy?retryWrites=true&w=majority
 CORS_ORIGIN=http://localhost:3000
+# Producción: https://tu-app.netlify.app
 NODE_ENV=development
 ```
+
+**Archivos de ejemplo disponibles:**
+- `.env.example` - Variables del frontend
+- `server/.env.example` - Variables del backend
+
+⚠️ **Nunca subas archivos `.env` a Git** - Ya están protegidos en `.gitignore`
+
+---
+
+## 🧪 Verificación Pre-Deploy
+
+Ejecuta antes de desplegar para verificar la configuración:
+
+```bash
+chmod +x check-deploy.sh
+./check-deploy.sh
+```
+
+El script verifica:
+- ✅ Git configurado con remote correcto
+- ✅ Variables de entorno presentes
+- ✅ Archivos de configuración (netlify.toml, render.yaml)
+- ✅ Scripts de deployment disponibles
 
 ---
 
 ## 🐛 Troubleshooting
 
 ### El cliente muestra "Desconectado"
-- Verifica que el servidor esté corriendo en el puerto 3001
-- Verifica `VITE_SERVER_URL` en el frontend
+- ✅ Verifica que el servidor esté corriendo en el puerto 3001
+- ✅ Verifica `VITE_SERVER_URL` en el frontend
 - Revisa la consola del navegador para errores
 
 ### Error de MongoDB
