@@ -1,0 +1,19 @@
+# Render Configuration for Foxy Backend
+# Este archivo debe estar en la raíz del repositorio
+
+services:
+  - type: web
+    name: foxy-backend
+    runtime: node
+    rootDir: server
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: MONGODB_URI
+        sync: false  # Se configura manualmente en el dashboard
+      - key: CORS_ORIGIN
+        sync: false  # Se configura manualmente en el dashboard

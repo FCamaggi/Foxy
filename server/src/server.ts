@@ -69,11 +69,15 @@ io.on('connection', (socket: Socket) => {
         deck: [],
         players: [{
           id: socket.id,
+          socketId: socket.id,
           name: playerName,
+          isBot: false,
           guesses: [],
           bets: [],
           score: 0,
-          totalScore: 0
+          totalScore: 0,
+          isReady: false,
+          lastActivity: new Date()
         }],
         difficulty: difficulty || 'medium',
         foxyVariant: foxyVariant || 'standard',
@@ -116,11 +120,15 @@ io.on('connection', (socket: Socket) => {
 
       const newPlayer = {
         id: socket.id,
+        socketId: socket.id,
         name: playerName,
+        isBot: false,
         guesses: [],
         bets: [],
         score: 0,
-        totalScore: 0
+        totalScore: 0,
+        isReady: false,
+        lastActivity: new Date()
       };
 
       room.players.push(newPlayer);

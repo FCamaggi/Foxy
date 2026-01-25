@@ -67,11 +67,18 @@ Abre http://localhost:3000 en tu navegador.
 
 ## 📚 Documentación
 
-- **[DEPLOY_NOW.md](./DEPLOY_NOW.md)** - 🚀 Resumen ejecutivo para deployment
-- **[DEPLOY_GUIDE.md](./DEPLOY_GUIDE.md)** - 📖 Guía completa paso a paso
+**📖 [Ver Índice Completo de Documentación](./INDEX.md)** - Navega toda la documentación organizada
+
+### Guías de Deployment
+- **[DEPLOY_NOW.md](./DEPLOY_NOW.md)** - 🚀 Resumen ejecutivo (5 minutos)
+- **[DEPLOY_GUIDE.md](./DEPLOY_GUIDE.md)** - 📖 Guía completa paso a paso (30 minutos)
 - **[MONGODB_SETUP.md](./MONGODB_SETUP.md)** - 🗄️ Configuración detallada de MongoDB Atlas
+- **[CHECKLIST.md](./CHECKLIST.md)** - ✅ Checklist de verificación pre-deploy
+
+### Documentación Técnica
 - **[ARCHITECTURE.md](./ARCHITECTURE.md)** - 🏗️ Arquitectura del sistema
-- **[CHECKLIST.md](./CHECKLIST.md)** - ✅ Checklist de verificación
+- **[PROJECT_STATUS.md](./PROJECT_STATUS.md)** - 📊 Estado actual del proyecto
+- **[SCRIPTS_README.md](./SCRIPTS_README.md)** - 🛠️ Guía de scripts disponibles
 - **[docs/manual.md](./docs/manual.md)** - 📘 Manual del juego físico original
 
 ---
@@ -246,6 +253,103 @@ El script verifica:
 
 ### El cliente muestra "Desconectado"
 - ✅ Verifica que el servidor esté corriendo en el puerto 3001
+- ✅ Revisa `VITE_SERVER_URL` en el frontend
+- ✅ Revisa CORS_ORIGIN en el backend
+
+### Error de conexión a MongoDB
+- ✅ Verifica que `MONGODB_URI` esté bien formado
+- ✅ Incluye `/foxy?retryWrites=true&w=majority` al final
+- ✅ Confirma que el usuario tenga permisos
+- ✅ Verifica Network Access (0.0.0.0/0 para cualquier IP)
+
+### Backend en Render no responde (primeros 30s)
+- ⏱️ **Normal:** Free tier se duerme tras 15min inactividad
+- 🔄 Primera petición después de dormir toma ~30s en despertar
+- ✅ Solución: Espera o usa un servicio de ping (UptimeRobot)
+
+### Build falla en Netlify/Render
+- ✅ Verifica que `netlify.toml` tenga `build.command = "npm run build"`
+- ✅ Verifica que `render.yaml` tenga `rootDir: server`
+- ✅ Revisa logs de build en el dashboard
+
+### No se puede crear/unirse a salas
+- ✅ Verifica que MongoDB esté conectado (logs del backend)
+- ✅ Confirma que Socket.io esté escuchando eventos
+- ✅ Revisa consola del navegador para errores de socket
+
+**Para más ayuda, consulta:**
+- [DEPLOY_GUIDE.md](./DEPLOY_GUIDE.md) - Sección de troubleshooting
+- [CHECKLIST.md](./CHECKLIST.md) - Verificación paso a paso
+
+---
+
+## 📊 Rendimiento
+
+### Límites del Free Tier
+
+**MongoDB Atlas (M0):**
+- 512 MB de storage
+- Conexiones ilimitadas
+- Backups automáticos (últimas 24h)
+
+**Render (Free):**
+- 750 horas/mes de compute
+- Auto-sleep tras 15min sin actividad
+- 100 GB/mes de ancho de banda
+
+**Netlify (Starter):**
+- 100 GB/mes de ancho de banda
+- 300 build minutes/mes
+- Deploy automático desde Git
+
+---
+
+## 🤝 Contribuir
+
+1. Fork el proyecto
+2. Crea tu rama de feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+---
+
+## 📜 Licencia
+
+Este proyecto es de código abierto y está disponible bajo la Licencia MIT.
+
+---
+
+## 🎉 Créditos
+
+- **Juego Original:** Foxy (juego de mesa físico)
+- **Desarrollo:** Implementación digital con React + Node.js
+- **Stack:** MERN Stack (MongoDB, Express, React, Node.js)
+- **Real-time:** Socket.io para multiplayer
+
+---
+
+## 📞 Soporte
+
+¿Problemas durante el deployment?
+
+1. **Revisa la documentación:**
+   - [DEPLOY_GUIDE.md](./DEPLOY_GUIDE.md) - Guía completa
+   - [CHECKLIST.md](./CHECKLIST.md) - Lista de verificación
+   
+2. **Ejecuta el verificador:**
+   ```bash
+   ./check-deploy.sh
+   ```
+
+3. **Consulta logs:**
+   - Render: Dashboard → Logs
+   - Netlify: Deploy logs
+   - MongoDB: Atlas → Monitoring
+
+---
+
+**¡Listo para jugar! 🦊**
 - ✅ Verifica `VITE_SERVER_URL` en el frontend
 - Revisa la consola del navegador para errores
 

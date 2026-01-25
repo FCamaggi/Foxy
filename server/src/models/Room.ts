@@ -1,9 +1,14 @@
-import mongoose, { Schema, Document } from 'mongoose';
-import { Room, Player, CardData, GamePhase, DifficultyLevel, FoxyVariant } from './types';
+import mongoose, { Schema, Document, Model } from 'mongoose';
+import { Room, Player, CardData, GamePhase, DifficultyLevel, FoxyVariant } from '../types';
 
+// Extend RoomDocument with methods
 interface RoomDocument extends Omit<Room, 'code'>, Document {
   code: string;
+  toGameState(): any;
 }
+
+// Model type
+interface RoomModel extends Model<RoomDocument> {}
 
 const PlayerSchema = new Schema<Player>({
   id: { type: String, required: true },
@@ -65,4 +70,4 @@ RoomSchema.methods.toGameState = function() {
   };
 };
 
-export const RoomModel = mongoose.model<RoomDocument>('Room', RoomSchema);
+export const RoomModel = mongoose.model<RoomDocument, RoomModel>('Room', RoomSchema);
