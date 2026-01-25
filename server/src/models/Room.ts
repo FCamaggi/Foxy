@@ -44,10 +44,7 @@ const RoomSchema = new Schema<RoomDocument>({
   maxPlayers: { type: Number, default: 5 }
 });
 
-// Index for cleaning old rooms
-RoomSchema.index({ lastActivity: 1 });
-
-// Auto-delete rooms after 24 hours of inactivity
+// Auto-delete rooms after 24 hours of inactivity (includes index on lastActivity)
 RoomSchema.index({ lastActivity: 1 }, { expireAfterSeconds: 86400 });
 
 // Method to convert to client GameState
