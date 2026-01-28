@@ -49,13 +49,14 @@ export const CardDisplay: React.FC<CardDisplayProps> = ({ card, revealed }) => {
         <span className={`font-bold uppercase tracking-wider text-sm sm:text-base ${env.color}`}>{env.label}</span>
       </div>
 
-      <div className="flex-1 flex flex-col items-center justify-center gap-2 sm:gap-6 z-10 p-2 sm:p-4">
+      <div className={`flex-1 flex flex-col items-center justify-center z-10 p-2 sm:p-4 ${card.animals.length === 3 ? 'gap-1 sm:gap-3' : 'gap-2 sm:gap-6'}`}>
         {card.animals.map((animal, idx) => {
           const config = ANIMAL_CONFIG[animal];
           const Icon = config.icon;
+          const iconSize = card.animals.length === 3 ? 'w-10 h-10 sm:w-16 sm:h-16' : 'w-12 h-12 sm:w-20 sm:h-20';
           return (
             <div key={idx} className="flex flex-col items-center transform transition-transform hover:scale-110">
-              <Icon className={`w-12 h-12 sm:w-20 sm:h-20 ${config.color} drop-shadow-md`} />
+              <Icon className={`${iconSize} ${config.color} drop-shadow-md`} />
               <span className={`text-[10px] sm:text-xs font-bold uppercase mt-1 px-2 py-0.5 bg-white/80 rounded-full text-gray-600`}>
                 {config.label}
               </span>
